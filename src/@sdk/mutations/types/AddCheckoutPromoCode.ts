@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CheckoutErrorCode } from "./../../types/globalTypes";
+import { CheckoutErrorCode } from "./../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AddCheckoutPromoCode
@@ -546,34 +546,21 @@ export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout {
   voucherCode: string | null;
 }
 
-export interface AddCheckoutPromoCode_checkoutAddPromoCode_errors {
-  __typename: "Error";
-  /**
-   * Name of a field that caused the error. A value of `null` indicates that the
-   * error isn't associated with a particular field.
-   */
-  field: string | null;
-  /**
-   * The error message.
-   */
-  message: string | null;
-}
-
 export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkoutErrors {
   __typename: "CheckoutError";
-  /**
-   * Name of a field that caused the error. A value of `null` indicates that the
-   * error isn't associated with a particular field.
-   */
-  field: string | null;
-  /**
-   * The error message.
-   */
-  message: string | null;
   /**
    * The error code.
    */
   code: CheckoutErrorCode;
+  /**
+   * Name of a field that caused the error. A value of `null` indicates that the
+   * error isn't associated with a particular field.
+   */
+  field: string | null;
+  /**
+   * The error message.
+   */
+  message: string | null;
 }
 
 export interface AddCheckoutPromoCode_checkoutAddPromoCode {
@@ -582,10 +569,6 @@ export interface AddCheckoutPromoCode_checkoutAddPromoCode {
    * The checkout with the added gift card or voucher.
    */
   checkout: AddCheckoutPromoCode_checkoutAddPromoCode_checkout | null;
-  /**
-   * List of errors that occurred executing the mutation.
-   */
-  errors: AddCheckoutPromoCode_checkoutAddPromoCode_errors[];
   checkoutErrors: AddCheckoutPromoCode_checkoutAddPromoCode_checkoutErrors[];
 }
 

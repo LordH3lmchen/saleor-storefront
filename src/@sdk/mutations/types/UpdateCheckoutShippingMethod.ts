@@ -2,24 +2,11 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CheckoutErrorCode } from "./../../types/globalTypes";
+import { CheckoutErrorCode } from "./../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateCheckoutShippingMethod
 // ====================================================
-
-export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_errors {
-  __typename: "Error";
-  /**
-   * Name of a field that caused the error. A value of `null` indicates that the
-   * error isn't associated with a particular field.
-   */
-  field: string | null;
-  /**
-   * The error message.
-   */
-  message: string | null;
-}
 
 export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_checkout_totalPrice_gross {
   __typename: "Money";
@@ -562,6 +549,10 @@ export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_check
 export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_checkoutErrors {
   __typename: "CheckoutError";
   /**
+   * The error code.
+   */
+  code: CheckoutErrorCode;
+  /**
    * Name of a field that caused the error. A value of `null` indicates that the
    * error isn't associated with a particular field.
    */
@@ -570,18 +561,10 @@ export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_check
    * The error message.
    */
   message: string | null;
-  /**
-   * The error code.
-   */
-  code: CheckoutErrorCode;
 }
 
 export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate {
   __typename: "CheckoutShippingMethodUpdate";
-  /**
-   * List of errors that occurred executing the mutation.
-   */
-  errors: UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_errors[];
   /**
    * An updated checkout.
    */

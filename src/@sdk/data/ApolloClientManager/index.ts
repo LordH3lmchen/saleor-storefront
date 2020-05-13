@@ -4,6 +4,13 @@ import { getAuthToken } from "@sdk/auth";
 import { Checkout } from "@sdk/fragments/types/Checkout";
 import { OrderDetail } from "@sdk/fragments/types/OrderDetail";
 import { Payment } from "@sdk/fragments/types/Payment";
+import {
+  ICheckoutAddress,
+  ICheckoutModel,
+  ICheckoutModelLine,
+  IOrderModel,
+  IPaymentModel,
+} from "@sdk/helpers/LocalStorageHandler";
 import * as CheckoutMutations from "@sdk/mutations/checkout";
 import {
   AddCheckoutPromoCode,
@@ -57,19 +64,12 @@ import {
   GetShopPaymentGateways_shop_availablePaymentGateways,
 } from "@sdk/queries/types/GetShopPaymentGateways";
 import { UserCheckoutDetails } from "@sdk/queries/types/UserCheckoutDetails";
-import {
-  ICheckoutAddress,
-  ICheckoutModel,
-  ICheckoutModelLine,
-  IOrderModel,
-  IPaymentModel,
-} from "@sdk/repository";
 import { CountryCode } from "@sdk/types/globalTypes";
 import { filterNotEmptyArrayItems } from "@sdk/utils";
 
-import { INetworkManager } from "./types";
+import { IApolloClientManager } from "./types";
 
-export class NetworkManager implements INetworkManager {
+export class ApolloClientManager implements IApolloClientManager {
   private client: ApolloClient<any>;
 
   constructor(client: ApolloClient<any>) {
@@ -79,6 +79,7 @@ export class NetworkManager implements INetworkManager {
   getCheckout = async (checkoutToken: string | null) => {
     let checkout: Checkout | null;
     try {
+      console.log("g");
       checkout = await new Promise((resolve, reject) => {
         if (this.isLoggedIn()) {
           const observable = this.client.watchQuery<UserCheckoutDetails, any>({
@@ -87,6 +88,7 @@ export class NetworkManager implements INetworkManager {
           });
           observable.subscribe(
             result => {
+              console.log("e", result);
               const { data, errors } = result;
               if (errors?.length) {
                 reject(errors);

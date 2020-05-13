@@ -1,10 +1,10 @@
-import { GetShopPaymentGateways_shop_availablePaymentGateways } from "../queries/types/GetShopPaymentGateways";
 import {
   ICheckoutModel,
   ICheckoutModelPrice,
   ICheckoutModelPriceValue,
   IPaymentModel,
-} from "../repository";
+} from "../helpers/LocalStorageHandler";
+import { GetShopPaymentGateways_shop_availablePaymentGateways } from "../queries/types/GetShopPaymentGateways";
 
 export enum StateItems {
   CHECKOUT,

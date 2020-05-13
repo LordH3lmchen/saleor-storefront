@@ -1,25 +1,18 @@
 import { smallScreen } from "../../globalStyles/scss/variables.scss";
 
 import classNames from "classnames";
-import { isEmpty } from "lodash";
-import { History } from "history";
-import queryString from "query-string";
-import React, { useEffect, useMemo } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
 import Media from "react-media";
 
 import { Breadcrumbs, ProductDescription } from "../../components";
 import { generateCategoryUrl, generateProductUrl } from "../../core/utils";
 import GalleryCarousel from "./GalleryCarousel";
 import OtherProducts from "./Other";
-import { ProductDetails_product } from "./types/ProductDetails";
 
-import { useProductVariantsAttributes } from "@hooks";
-import { ICheckoutModelLine } from "@sdk/repository";
 import { ProductDescription as NewProductDescription } from "../../@next/components/molecules";
 import { ProductGallery } from "../../@next/components/organisms/";
-
 import { structuredData } from "../../core/SEO/Product/structuredData";
+import { IProps } from "./types";
 
 const populateBreadcrumbs = product => [
   {
@@ -32,64 +25,15 @@ const populateBreadcrumbs = product => [
   },
 ];
 
-const updateUrlWithAttributes = (history: History) => (
-  slug: string,
-  value: string
-) => {
-  history.replace(
-    queryString.stringifyUrl(
-      {
-        url: `${history.location.pathname}${history.location.search}`,
-        query: { [slug]: value },
-      },
-      { skipEmptyString: true }
-    )
-  );
-};
-
-const Page: React.FC<{
-  product: ProductDetails_product;
-  add: (variantId: string, quantity: number) => any;
-  items: ICheckoutModelLine[];
-  searchVariants?: { [key: string]: string };
-}> = ({ add, product, items, searchVariants }) => {
+const Page: React.FC<IProps & { queryAttributes: Record<string, string> }> = ({
+  add,
+  product,
+  items,
+  queryAttributes,
+}) => {
   const productGallery: React.RefObject<HTMLDivElement> = React.useRef();
 
-  const history = useHistory();
   const [variantId, setVariantId] = React.useState("");
-
-  const productVariantsAttributes = useProductVariantsAttributes(
-    product.variants
-  );
-
-  const queryVariants = useMemo(() => {
-    let queryVariants = {};
-    if (!isEmpty(searchVariants)) {
-      for (const key of Object.keys(productVariantsAttributes)) {
-        const {
-          attribute: { slug, id },
-          values,
-        } = productVariantsAttributes[key];
-        for (const key of Object.keys(searchVariants)) {
-          const item = searchVariants[key].toLowerCase();
-          if (key.toLowerCase() === slug) {
-            values.forEach(({ value }) => {
-              if (typeof item === "string" && value.toLowerCase() === item) {
-                queryVariants = { ...queryVariants, [id]: value };
-              }
-            });
-          }
-        }
-      }
-    }
-    return queryVariants;
-  }, [productVariantsAttributes]);
-
-  useEffect(() => {
-    if (!isEmpty(queryVariants)) {
-      history.replace(history.location.pathname);
-    }
-  }, [queryVariants]);
 
   const getImages = () => {
     if (product.variants && variantId) {
@@ -113,10 +57,9 @@ const Page: React.FC<{
       name={product.name}
       productVariants={product.variants}
       pricing={product.pricing}
-      queryVariants={queryVariants}
+      queryAttributes={queryAttributes}
       addToCart={add}
       setVariantId={setVariantId}
-      updateUrlWithAttributes={updateUrlWithAttributes(history)}
     />
   );
 

@@ -1,5 +1,4 @@
 import { ProductDetails_product_variants } from "@sdk/queries/types/ProductDetails";
-
 import { IProductVariantsAttributesSelectedValues } from "@types";
 
 export interface IProps {
@@ -10,6 +9,5 @@ export interface IProps {
   ) => void;
   selectSidebar?: boolean;
   selectSidebarTarget?: HTMLElement | null;
-  queryVariants?: { [key: string]: string };
-  updateUrlWithAttributes: (slug: string, value: string) => void;
+  queryAttributes: Record<string, string>;
 }

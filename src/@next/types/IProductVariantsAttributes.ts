@@ -1,8 +1,6 @@
 import { ISelectOption } from "@types";
-import {
-  ProductDetails_product_variants_attributes_attribute,
-  ProductDetails_product_variants_attributes_values,
-} from "../../@sdk/queries/types/ProductDetails";
+import { ProductDetails_product_variants_attributes_values } from "../../@sdk/queries/types/ProductDetails";
+import { ProductDetails_product_variants_attributes_attribute } from "../../views/Product/types/ProductDetails";
 
 export interface IProductVariantsAttribute {
   attribute: ProductDetails_product_variants_attributes_attribute;

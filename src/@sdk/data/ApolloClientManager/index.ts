@@ -1,4 +1,4 @@
-import ApolloClient from "apollo-client";
+import ApolloClient, { ApolloQueryResult } from "apollo-client";
 
 import { getAuthToken } from "@sdk/auth";
 import { Checkout } from "@sdk/fragments/types/Checkout";
@@ -64,6 +64,8 @@ import {
   GetShopPaymentGateways_shop_availablePaymentGateways,
 } from "@sdk/queries/types/GetShopPaymentGateways";
 import { UserCheckoutDetails } from "@sdk/queries/types/UserCheckoutDetails";
+import { UserDetails } from "@sdk/queries/types/UserDetails";
+import * as UserQueries from "@sdk/queries/user";
 import { CountryCode } from "@sdk/types/globalTypes";
 import { filterNotEmptyArrayItems } from "@sdk/utils";
 
@@ -75,6 +77,26 @@ export class ApolloClientManager implements IApolloClientManager {
   constructor(client: ApolloClient<any>) {
     this.client = client;
   }
+
+  watchUser = (
+    next: (value: ApolloQueryResult<UserDetails>) => void,
+    error?: (error: any) => void,
+    complete?: () => void
+  ) => {
+    this.client
+      .watchQuery<UserDetails, any>({
+        fetchPolicy: "cache-only",
+        query: UserQueries.getUserDetailsQuery,
+      })
+      .subscribe(next, error, complete);
+  };
+
+  // getUser = () => {
+  //   return this.client.query<UserDetails, any>({
+  //     fetchPolicy: "network-only",
+  //     query: UserQueries.getUserDetailsQuery,
+  //   });
+  // };
 
   getCheckout = async (checkoutToken: string | null) => {
     let checkout: Checkout | null;

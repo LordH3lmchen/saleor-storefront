@@ -10,4 +10,5 @@ export interface IProps {
   selectSidebar?: boolean;
   selectSidebarTarget?: HTMLElement | null;
   queryAttributes: Record<string, string>;
+  updateUrlWithAttributes: (slug: string, value: string) => void;
 }
